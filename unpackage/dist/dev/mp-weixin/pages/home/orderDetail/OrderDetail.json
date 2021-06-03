@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "完善订单",
+  "backgroundColor": "#ff5500",
+  "usingComponents": {
+    "u-parse": "/pages/common/u-parse/u-parse"
+  }
+}

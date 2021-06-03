@@ -1,0 +1,23 @@
+
+.hide-cond.data-v-47239f10 {
+	-webkit-transition-duration: 0.5s;
+	        transition-duration: 0.5s;
+	bottom: -1000px;
+}
+.show-cond.data-v-47239f10 {
+	-webkit-transition-duration: 0.5s;
+	        transition-duration: 0.5s;
+	bottom: 0px;
+}
+.scroll.data-v-47239f10 {
+	overflow-y: auto;
+	/*position: absolute;*/
+	width: 100%;
+}
+.dian.data-v-47239f10 {
+	width: 8px;
+	height: 8px;
+	border-radius: 100%;
+	background-color: #ffdf40;
+}
+

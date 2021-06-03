@@ -1,0 +1,157 @@
+@charset "UTF-8";
+.calendar {
+  font-size: 22rpx;
+  color: #333333;
+  border: 1px solid #d7d7d7;
+  font-weight: 600;
+  border-left: 0;
+  border-right: 0;
+}
+.calendar .calen-text-small {
+  font-size: 16rpx;
+}
+.calendar .calen-text-orange {
+  color: #e58252;
+}
+.calendar .calenHead-tradition {
+  position: relative;
+  vertical-align: bottom;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #f8f8f8;
+}
+.calendar .calenHead-tradition .dateBox {
+  line-height: 80rpx;
+  display: inline-block;
+  height: 80rpx;
+  padding: 0 40rpx;
+}
+.calendar .calenHead-tradition .dateBox:after {
+  border: 0;
+}
+.calendar .calenHead-tradition .dateBox .font-big {
+  font-size: 38rpx;
+  margin-right: 10rpx;
+}
+.calendar .calenHead-tradition .dateBox .font-small {
+  font-size: 18rpx;
+}
+.calendar .calenHead-tradition .reset {
+  color: #4a77e6;
+  font-weight: 400;
+  float: right;
+  padding: 0 30rpx;
+}
+.calendar .calenHead {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  white-space: nowrap;
+}
+.calendar .calenHead .headItem {
+  display: inline-block;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+  width: 215rpx;
+  height: 65rpx;
+  text-align: center;
+  line-height: 65rpx;
+  position: relative;
+}
+.calendar .calenHead .headItem.active {
+  background-color: #e8e8e8;
+}
+.calendar .calenHead .headItem.active:before {
+  content: "";
+  width: 16rpx;
+  height: 16rpx;
+  background: #6e7480;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: -8rpx;
+  left: 50%;
+  margin-left: -8rpx;
+}
+.calendar .calenHead .headItem:after {
+  content: "";
+  width: 1px;
+  height: 28rpx;
+  display: inline-block;
+  background: #e8e8e8;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -14rpx;
+}
+.calendar .weekBar {
+  background-color: #6e7480;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+.calendar .weekBar .weekItem {
+  height: 44rpx;
+  width: 14.28%;
+  line-height: 44rpx;
+  text-align: center;
+  color: #FFFFFF;
+}
+.calendar .dayBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.calendar .dayBox .day {
+  width: 14.285%;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  height: 106rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  border-bottom: 1px solid #d7d7d7;
+  margin-bottom: -1px;
+  /* 偷懒的方法  负边距使border重合*/
+}
+.calendar .dayBox .day.active {
+  background: #f77333 !important;
+  color: #FFFFFF !important;
+}
+.calendar .dayBox .day.active view {
+  color: #FFFFFF !important;
+}
+.calendar .dayBox .day .today {
+  color: #f77333;
+}
+.calendar .dayBox .day view {
+  height: 30rpx;
+}
+

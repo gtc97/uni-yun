@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "提交订单",
+  "backgroundColor": "#ff5500",
+  "usingComponents": {
+    "seat-charts": "/pages/home/itemDetail/SeatCharts"
+  }
+}

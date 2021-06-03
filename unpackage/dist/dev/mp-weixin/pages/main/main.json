@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "主页",
+  "usingComponents": {
+    "start-end-point": "/pages/main/components/StartEndPoint",
+    "indexes": "/pages/common/indexes",
+    "z-calendar": "/components/njzz-calendar/njzz-calendar"
+  }
+}
