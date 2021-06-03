@@ -14,36 +14,37 @@
     "pages/home/itemDetail/ItemDetail",
     "pages/home/orderDetail/OrderDetail",
     "pages/main/components/MyMap",
-    "pages/home/orderDetail/AddPassenger"
+    "pages/home/orderDetail/AddPassenger",
+    "pages/common/indexes"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#0faeff",
+    "navigationBarBackgroundColor": "#F23E1A",
     "backgroundColor": "#fbf9fe"
   },
   "tabBar": {
     "color": "#7a7e83",
-    "selectedColor": "#0faeff",
+    "selectedColor": "#F23C1B",
     "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/main/main",
         "text": "首页",
         "iconPath": "static/img/home.png",
-        "selectedIconPath": "static/img/homeHL.png"
+        "selectedIconPath": "static/img/homeOrange.png"
       },
       {
         "pagePath": "pages/order/order",
         "text": "订单",
         "iconPath": "static/img/order.png",
-        "selectedIconPath": "static/img/orderHL.png"
+        "selectedIconPath": "static/img/orderOrange.png"
       },
       {
         "pagePath": "pages/user/user",
         "text": "我的",
         "iconPath": "static/img/user.png",
-        "selectedIconPath": "static/img/userHL.png"
+        "selectedIconPath": "static/img/userOrange.png"
       }
     ]
   },

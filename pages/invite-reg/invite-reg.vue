@@ -230,7 +230,8 @@
 		height: 40px;
 		line-height: 40px;
 		text-align: center;
-		background-color: #0FAEFF;
+		/* background-color: #0FAEFF; */
+		background-color: #F23E1A;
 		color: #FFFFFF;
 	}
 

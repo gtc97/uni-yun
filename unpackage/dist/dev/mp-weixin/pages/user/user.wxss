@@ -28,7 +28,8 @@ button {
 	height: 240rpx;
 	padding: 20rpx;
 	box-sizing: border-box;
-	background-color: #0faeff;
+	/* background-color: #0faeff; */
+	background-color: #F23E1A;
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: row;
@@ -112,7 +113,8 @@ button {
 	width: 40rpx;
 	height: 90rpx;
 	line-height: 90rpx;
-	color: #0faeff;
+	/* color: #0faeff; */
+	color: #F23E1A;
 	text-align: center;
 	font-family: texticons;
 	margin-right: 20rpx;
@@ -133,5 +135,13 @@ button {
 	color: #555;
 	text-align: right;
 	font-family: texticons;
+}
+.content {
+	background-color: #DBDBDB;
+	padding: 10px;
+}
+.ad-view {
+	background-color: #FFFFFF;
+	margin-bottom: 10px;
 }
 

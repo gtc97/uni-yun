@@ -80,7 +80,6 @@ exports.main = async (event, context) => {
 	}
 
 	let res = {}
-	debugger
 	switch (event.action) {
 		case 'register':
 			res = await uniIDIns.register(params);

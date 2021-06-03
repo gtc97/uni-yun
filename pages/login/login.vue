@@ -589,14 +589,17 @@
 	}
 
 	.login-type-btn.act {
-		color: #0FAEFF;
-		border-bottom: solid 1px #0FAEFF;
+		/* color: #0FAEFF;
+		border-bottom: solid 1px #0FAEFF; */
+		color: #F23E1A;
+		border-bottom: solid 1px #F23E1A;
 	}
 
 	.send-code-btn {
 		width: 120px;
 		text-align: center;
-		background-color: #0FAEFF;
+		/* background-color: #0FAEFF; */
+		background-color: #F23E1A;
 		color: #FFFFFF;
 	}
 

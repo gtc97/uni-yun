@@ -1,9 +1,5 @@
 <template>
 	<view style="width: 100%;">
-		<cu-custom bgImage="https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">索引</block>
-		</cu-custom>
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
@@ -26,9 +22,6 @@
 							<view class="content">
 								<view class="text-grey">{{item.name}}<text class="text-abc">{{list[sub].name}}</text>君
 								</view>
-								<!-- <view class="text-gray text-sm">
-                                    有{{sub+2}}个主子需要伺候
-                                </view> -->
 							</view>
 						</view>
 					</view>
@@ -54,8 +47,6 @@
 	export default {
 		data() {
 			return {
-				// StatusBar: this.StatusBar,
-				// CustomBar: this.CustomBar,
 				hidden: true,
 				listCurID: '',
 				list: [],
@@ -63,7 +54,7 @@
 			};
 		},
 		onLoad() {
-			console.log('onload')
+			this.getAddress()
 			let list = [{}];
 			for (let i = 0; i < 26; i++) {
 				list[i] = {};
@@ -107,6 +98,32 @@
 			}).exec()
 		},
 		methods: {
+			getAddress(){
+				uniCloud.callFunction({
+					name: 'opendb-city-china',
+					data: {
+						action: 'getArea'
+					},
+					success: (e) => {
+						if (e.result.code == 0) {
+						} else {
+							uni.showModal({
+								content: e.result.msg,
+								showCancel: false
+							})
+						}
+				
+					},
+					fail: (e) => {
+						uni.showModal({
+							content: JSON.stringify(e),
+							showCancel: false
+						})
+					},
+					complete: () => {
+					}
+				})
+			},
 			page(items) {
 				console.log(items)
 			},
@@ -232,7 +249,8 @@
 		text-align: center;
 		font-size: 48upx;
 	}
+
 	.content {
-	    background-color: transparent;
+		background-color: transparent;
 	}
 </style>

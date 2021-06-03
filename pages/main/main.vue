@@ -28,17 +28,16 @@
 				</view>
 			</view>
 		</scroll-view>
-		<start-end-point class="top-line" @startClick="startClick()" @endClick="endClick()"></start-end-point>
+		<start-end-point class="top-line" :start="start" :end="end" @startClick="startClick()" @endClick="endClick()"></start-end-point>
 		<view class="cu-modal drawer-modal justify-end" :class="modalName=='startModal'?'show':''" @tap="hideModal">
 			<view class="cu-dialog width100" @click.stop="">
 				<view class="" style="height: 120upx;"></view>
 				<z-calendar :datePrice="datePrice" howManyMonth="12" @changeDate="changeDate" defaultSelect="2019-12-12"
-					mode="1">
-				</z-calendar>
+					mode="1"></z-calendar>
 			</view>
 		</view>
 		<view class="cu-form-group top-line">
-			<picker mode="date" :value="date" :start="nowtime" end="2050-12-31" @change="DateChange"
+			<picker mode="date" :value="date" :start="nowtime" end="2900-12-31" @change="DateChange"
 				style="padding-right: 0px">
 				<view style="display: flex; justify-content: space-between;">
 					<view class="">
@@ -50,21 +49,26 @@
 		</view>
 		<view class="bg-white padding top-line">
 			<button class="cu-btn bg-gradual-orange lg" style="width: 100%;" @click="goSearchList()">开始搜索</button>
-			<view class="padding-top-sm flex justify-between">
+			<view class="padding-top-sm flex justify-between" v-show="adressList.length > 0">
 				<view class="text-sm">
-					<text class="padding-lr-xs">
-						北京 <text class="myIcon-jiantou padding-lr-xs"></text> 唐山
-					</text>
-					<text class="padding-lr-xs">
-						唐山 <text class="myIcon-jiantou padding-lr-xs"></text> 北京
-					</text>
-					<text class="padding-lr-xs">
-						北京 <text class="myIcon-jiantou padding-lr-xs"></text> 秦皇岛
+					<text class="padding-lr-xs" v-for="(item,index) in adressList" :key="index" @click="changeAdress(item)">
+						{{item.set}} <text class="myIcon-jiantou padding-lr-xs"></text> {{item.arrive}}
 					</text>
 				</view>
-				<view>清空历史</view>
+				<view @click="deleteList()">清空历史</view>
 			</view>
 		</view>
+		<!-- #ifndef APP-PLUS -->
+		<!-- 多平台兼容 -->
+		<view class="ad-view">
+			<ad adpid="1111111111" unit-id="" appid="" apid="" type="feed"></ad>
+		</view>
+		<!-- #endif -->
+		<!-- #ifdef APP-PLUS -->
+		<view class="ad-view" style="width: 100%;">
+			<ad :data="adData" style="width: 100%;"></ad>
+		</view>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -77,12 +81,18 @@
 		univerifyLogin
 	} from '@/common/univerify.js'
 	import zCalendar from "@/components/njzz-calendar/njzz-calendar.vue"
-    import StartEndPoint from './components/StartEndPoint'
-    import Indexes from '@/pages/common/indexes'
+	import StartEndPoint from './components/StartEndPoint'
+	import Indexes from '@/pages/common/indexes'
 	export default {
-        components: {StartEndPoint, Indexes,zCalendar},
+		components: {
+			StartEndPoint,
+			Indexes,
+			zCalendar
+		},
 		data() {
 			return {
+				title: 'ad',
+				adData: {},
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
@@ -105,22 +115,34 @@
 				],
 				TabCur: 0,
 				scrollLeft: 0,
-				date: '2018-12-25',
+				date: '',
 				modalName: '',
 				datePrice: [{
-						date: "2019-12-11",
+						date: "2021-06-11",
 						price: "111"
 					},
 					{
-						date: "2019-12-12",
+						date: "2021-06-12",
 						price: "333"
 					},
 					{
-						date: "2019-12-10",
+						date: "2021-06-10",
 						price: "222",
 					},
 				],
 				nowtime: '',
+				adressList: [{
+					set: '北京',
+					arrive: '上海',
+				}, {
+					set: '北京',
+					arrive: '石家庄',
+				}, {
+					set: '天津',
+					arrive: '济南',
+				}],
+				start:'北京',
+				end:'天津',
 			}
 		},
 		computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
@@ -167,6 +189,15 @@
 			}
 			var myDate = new Date();
 			this.nowtime = myDate.toLocaleDateString();
+			var year = myDate.getFullYear();
+			var month = myDate.getMonth() + 1;
+			var date = myDate.getDate();
+			this.date = year + "-" + month + "-" + date
+		},
+		onReady: function(e) {
+			// #ifdef APP-PLUS
+			this.getAdData()
+			// #endif
 		},
 		methods: {
 			...mapMutations(['login']),
@@ -208,7 +239,7 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			DateChange(e) {
-				this.showModal('startModal')
+				// this.showModal('startModal')
 				this.date = e.detail.value
 			},
 			goSearchList() {
@@ -236,8 +267,31 @@
 			showModal(modalName) {
 				this.modalName = modalName
 			},
+			getAdData: function(e) {
+				// 仅APP平台支持
+				plus.ad.getAds({
+						adpid: '1111111111', // 替换为自己申请获取的广告位标识，此广告位标识仅在HBuilderX标准基座中有效，仅用于测试
+						// count: 3, // 广告数量，默认 3
+						// width: 300 // 根据宽度获取合适的广告(单位px)
+					},
+					(res) => {
+						// 注意: 广告数据只能使用一次
+						this.adData = res.ads[0];
+						console.log(this.adData);
+					},
+					(err) => {
+						console.log(err);
+					}
+				)
+			},
+			deleteList() {
+				this.adressList = []
+			},
+			changeAdress(item){
+				this.start = item.set
+				this.end = item.arrive
+			},
 		}
-
 	}
 </script>
 

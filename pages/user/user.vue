@@ -20,7 +20,7 @@
 					<text class="list-text">邀请好友</text>
 					<text class="navigat-arrow">&#xe65e;</text>
 				</view>
-				
+
 				<view class="center-list-item">
 					<text class="list-icon">&#xe639;</text>
 					<text class="list-text">新消息通知</text>
@@ -47,8 +47,21 @@
 				</view>
 			</view>
 			<view class="btn-row">
-				<button v-if="hasLogin" class="primary" type="primary" :loading="logoutBtnLoading" @tap="bindLogout">退出登录</button>
+				<button v-if="hasLogin" class="primary" type="primary" :loading="logoutBtnLoading"
+					@tap="bindLogout">退出登录</button>
 			</view>
+
+			<!-- #ifndef APP-PLUS -->
+			<!-- 多平台兼容 -->
+			<view class="ad-view">
+				<ad adpid="1111111111" unit-id="" appid="" apid="" type="feed"></ad>
+			</view>
+			<!-- #endif -->
+			<!-- #ifdef APP-PLUS -->
+			<view class="ad-view" style="width: 100%;">
+				<ad :data="adData" style="width: 100%;"></ad>
+			</view>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -65,6 +78,8 @@
 	export default {
 		data() {
 			return {
+				title: 'ad',
+				adData: {},
 				avatarUrl: "../../static/img/logo.png",
 				inviteUrl: '',
 				logoutBtnLoading: false,
@@ -75,13 +90,18 @@
 			...mapState(['hasLogin', 'forcedLogin', 'userName'])
 		},
 
+		onReady: function(e) {
+			// #ifdef APP-PLUS
+			this.getAdData()
+			// #endif
+		},
 		methods: {
 			...mapMutations(['logout']),
 			bindLogin() {
 				if (!this.hasLogin) {
 					univerifyLogin().catch(err => {
 						if (err === false) return;
-						
+
 						uni.navigateTo({
 							url: '../login/login',
 						});
@@ -152,7 +172,25 @@
 				uni.navigateTo({
 					url: '../pwd/update-password'
 				})
-			}
+			},
+
+			getAdData: function(e) {
+				// 仅APP平台支持
+				plus.ad.getAds({
+						adpid: '1111111111', // 替换为自己申请获取的广告位标识，此广告位标识仅在HBuilderX标准基座中有效，仅用于测试
+						// count: 1, // 广告数量，默认 3
+						// width: 300 // 根据宽度获取合适的广告(单位px)
+					},
+					(res) => {
+						// 注意: 广告数据只能使用一次
+						this.adData = res.ads[0];
+						console.log(this.adData);
+					},
+					(err) => {
+						console.log(err);
+					}
+				)
+			},
 		}
 	}
 </script>
@@ -187,7 +225,8 @@
 		height: 240rpx;
 		padding: 20rpx;
 		box-sizing: border-box;
-		background-color: #0faeff;
+		/* background-color: #0faeff; */
+		background-color: #F23E1A;
 		flex-direction: row;
 		align-items: center;
 	}
@@ -254,7 +293,8 @@
 		width: 40rpx;
 		height: 90rpx;
 		line-height: 90rpx;
-		color: #0faeff;
+		/* color: #0faeff; */
+		color: #F23E1A;
 		text-align: center;
 		font-family: texticons;
 		margin-right: 20rpx;
@@ -275,5 +315,15 @@
 		color: #555;
 		text-align: right;
 		font-family: texticons;
+	}
+
+	.content {
+		background-color: #DBDBDB;
+		padding: 10px;
+	}
+
+	.ad-view {
+		background-color: #FFFFFF;
+		margin-bottom: 10px;
 	}
 </style>

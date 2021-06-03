@@ -9,7 +9,7 @@
 			<text class="reset" @tap="reset">重置</text>
 		</view>
 		<scroll-view class="calenHead" scroll-x v-if="mode=='1'">
-			<view class="headItem" v-for="(date,index) in monthList" v-bind:key="index" :class="[current==index?'active':'']" @tap="headItemTap(index)">
+			<view class="headItem" v-for="(date,index) in monthList" :key="index" :class="[current==index?'active':'']" @tap="headItemTap(index)">
 				<text>{{date.getMonth()+1}}月</text>
 				<text class="calen-text-orange" v-if="monthDatePrice[index].length">&yen;{{monthDatePrice[index][0].price}}</text>
 				<text class="calen-text-small" v-if="monthDatePrice[index].length">起</text>
@@ -17,7 +17,7 @@
 			</view>
 		</scroll-view>
 		<view class="weekBar">
-			<view class="weekItem" v-for="(item,index) in weekSort" v-bind:key="index">
+			<view class="weekItem" v-for="(item,index) in weekSort" :key="index">
 				{{item}}
 			</view>
 		</view>

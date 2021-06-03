@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view style="width: 100%;">
         <view class="page-body">
             <view class="page-section page-section-gap">
                 <map :style="{width: '100%', height: screenHeight + 'px'}"
