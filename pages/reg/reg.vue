@@ -75,7 +75,6 @@
 					},
 					success(e) {
 						console.log("注册", e);
-
 						if (e.result.code === 0) {
 							that.setUserInviteCode(e.result.uid)
 							uni.showToast({
@@ -84,6 +83,7 @@
 							uni.setStorageSync('uni_id_token', e.result.token)
 							uni.setStorageSync('uni_id_has_pwd', e.result.password)
 							uni.setStorageSync('username', e.result.username)
+							uni.setStorageSync('uni_id', e.result.uid)
 							uni.reLaunch({
 								url: '../main/main',
 							});

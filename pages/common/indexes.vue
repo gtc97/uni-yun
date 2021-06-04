@@ -13,15 +13,13 @@
 		<scroll-view scroll-y class="indexes" :scroll-into-view="'indexes-'+ listCurID"
 			:style="[{height:'calc(100vh - '+ CustomBar + 'px - 50px)'}]" :scroll-with-animation="true"
 			:enable-back-to-top="true">
-			<block v-for="(item,index) in list" :key="index">
-				<view :class="'indexItem-' + item.name" :id="'indexes-' + item.name" :data-index="item.name">
-					<view class="padding text-left">{{item.name}}</view>
+			<block v-for="(item,index) in listAddress" :key="index">
+				<view :class="'indexItem-' + item._id" :id="'indexes-' + item._id" :data-index="item._id">
+					<view class="padding text-left">{{item._id}}</view>
 					<view class="cu-list menu-avatar no-padding">
-						<view class="cu-item" v-for="(items,sub) in 2" :key="sub" @click="page(items)">
-							<!-- <view class="cu-avatar round lg">{{item.name}}</view> -->
+						<view class="cu-item" v-for="(items,sub) in item.data" :key="sub" @click="page(items)">
 							<view class="content">
-								<view class="text-grey">{{item.name}}<text class="text-abc">{{list[sub].name}}</text>君
-								</view>
+								<view class="text-grey">{{items.name}}<!-- <text class="text-abc">{{listAddress[sub].name}}</text> --></view>
 							</view>
 						</view>
 					</view>
@@ -30,9 +28,8 @@
 		</scroll-view>
 		<view class="indexBar" :style="[{height:'calc(100vh - ' + CustomBar + 'px - 50px)'}]">
 			<view class="indexBar-box" @touchstart="tStart" @touchend="tEnd" @touchmove.stop="tMove">
-				<view class="indexBar-item" v-for="(item,index) in list" :key="index" :id="index" @touchstart="getCur"
-					@touchend="setCur">
-					{{item.name}}
+				<view class="indexBar-item" v-for="(item,index) in listAddress" :key="index" :id="index" @touchstart="getCur" @touchend="setCur">
+					{{item._id}}
 				</view>
 			</view>
 		</view>
@@ -51,18 +48,19 @@
 				listCurID: '',
 				list: [],
 				listCur: '',
+				listAddress: [],
 			};
 		},
 		onLoad() {
 			this.getAddress()
-			let list = [{}];
-			for (let i = 0; i < 26; i++) {
-				list[i] = {};
-				list[i].name = String.fromCharCode(65 + i);
-			}
+			// let list = [{}];
+			// for (let i = 0; i < 26; i++) {
+			// 	list[i] = {};
+			// 	list[i].name = String.fromCharCode(65 + i);
+			// }
 
-			this.list = list;
-			this.listCur = list[0];
+			// this.list = list;
+			// this.listCur = list[0];
 		},
 		onReady() {
 			console.log('onready');
@@ -77,15 +75,15 @@
 			}).exec()
 		},
 		mounted() {
-			console.log('mounted')
-			let list = [{}];
-			for (let i = 0; i < 26; i++) {
-				list[i] = {};
-				list[i].name = String.fromCharCode(65 + i);
-			}
+			// console.log('mounted')
+			// let list = [{}];
+			// for (let i = 0; i < 26; i++) {
+			// 	list[i] = {};
+			// 	list[i].name = String.fromCharCode(65 + i);
+			// }
 
-			this.list = list;
-			this.listCur = list[0];
+			// this.listAddress = list;
+			// this.listCur = list[0];
 
 			let that = this;
 			uni.createSelectorQuery().select('.indexBar-box').boundingClientRect(function(res) {
@@ -102,17 +100,10 @@
 				uniCloud.callFunction({
 					name: 'opendb-city-china',
 					data: {
-						action: 'getArea'
+						action: 'cityList',
 					},
 					success: (e) => {
-						if (e.result.code == 0) {
-						} else {
-							uni.showModal({
-								content: e.result.msg,
-								showCancel: false
-							})
-						}
-				
+						this.listAddress = e.result.data
 					},
 					fail: (e) => {
 						uni.showModal({
@@ -131,7 +122,7 @@
 			getCur(e) {
 				console.log('get')
 				this.hidden = false;
-				this.listCur = this.list[e.target.id].name;
+				this.listCur = this.listAddress[e.target.id]._id;
 			},
 			setCur(e) {
 				console.log('set')
@@ -147,7 +138,7 @@
 				//判断选择区域,只有在选择区才会生效
 				if (y > offsettop) {
 					let num = parseInt((y - offsettop) / 20);
-					this.listCur = that.list[num].name
+					this.listCur = that.listAddress[num]._id
 				};
 			},
 
@@ -167,7 +158,7 @@
 				console.log('未知')
 				let that = this;
 				let barHeight = this.barHeight;
-				let list = this.list;
+				let list = this.listAddress;
 				let scrollY = Math.ceil(list.length * e.detail.y / barHeight);
 				for (let i = 0; i < list.length; i++) {
 					if (scrollY < i + 1) {
